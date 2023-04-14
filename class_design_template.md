@@ -80,10 +80,10 @@ Define the attributes of your Model class. You can usually map the table columns
 # Model class
 # (in lib/student.rb)
 
-class Account
+class Post
 
   # Replace the attributes by your own columns.
-  attr_accessor :id, :username, :email_account
+  attr_accessor :id, :title, :contents, :views, :account_id
 end
 
 # The keyword attr_accessor is a special Ruby feature
@@ -110,7 +110,7 @@ Using comments, define the method signatures (arguments and return value) and wh
 # Repository class
 # (in lib/student_repository.rb)
 
-class AccountsRepository
+class PostsRepository
 
   # Selecting all records
   # No arguments
@@ -155,11 +155,11 @@ These examples will later be encoded as RSpec tests.
 # 1
 # Get all artists
 
-repo = AccountsRepository.new
+repo = PostsRepository.new
 
-accounts = repo.all
+posts = repo.all
 
-accounts.length # =>  2
+expect(posts.length).to eq 2
 
 accounts[0].id # =>  1
 accounts[1].username # =>  'bg290'
@@ -192,13 +192,12 @@ expect(all_accounts[2].id).to eq '3'
 expect(all_accounts[2].username).to eq 'go234'
 expect(all_accounts[2].email_address).to eq 'gerryobrien@email.com'
 
-account[2].id # =>  3
-account[2].name # =>  'Bob Dylan'
-account[2].genre # =>  'pop'
+
 
 # Update artist
 
-repo = ArtistRepository.new
+repo = AccountRepository.new
+
 
 artist = repo.update(artist)
 artists[2].genre # => 'Alternative'
@@ -206,9 +205,10 @@ artists[2].genre # => 'Alternative'
 # Delete artist
 
 repo = ArtistRepository.new
+repo.delete(1)
 
-artist = repo.delete(artist)
-artists.length # => 2
+expect(repo.all.length).to eq 1
+
 
 ```
 
